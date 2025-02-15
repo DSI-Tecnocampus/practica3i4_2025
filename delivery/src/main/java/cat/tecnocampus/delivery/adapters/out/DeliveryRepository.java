@@ -14,7 +14,6 @@ public class DeliveryRepository implements cat.tecnocampus.delivery.application.
         this.deliveryRepositoryJPA = deliveryRepositoryJPA;
     }
 
-    @Transactional
     public Delivery save(Delivery delivery) {
         var entity = deliveryRepositoryJPA.save(DeliveryMapper.toEntity(delivery));
         return DeliveryMapper.toModel(entity);

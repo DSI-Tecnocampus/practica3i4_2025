@@ -18,7 +18,7 @@ public class ReserveTruckController {
         this.reserveTruckUseCase = reserveTruckUseCase;
     }
 
-    @PostMapping("/delivery")
+    @PostMapping("/deliveries")
     public ResponseEntity<DeliveryResponse> reserveTruck(@RequestBody DeliveryCommand delivery) {
         Optional<DeliveryResponse> deliveryOptional = reserveTruckUseCase.reserveTruck(delivery);
         return deliveryOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
