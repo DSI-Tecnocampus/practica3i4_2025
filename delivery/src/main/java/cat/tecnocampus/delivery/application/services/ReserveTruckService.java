@@ -1,6 +1,7 @@
 package cat.tecnocampus.delivery.application.services;
 
 import cat.tecnocampus.delivery.application.ports.in.DeliveryCommand;
+import cat.tecnocampus.delivery.application.ports.in.DeliveryResponse;
 import cat.tecnocampus.delivery.application.ports.in.ReserveTruckUseCase;
 import cat.tecnocampus.delivery.application.ports.out.DeliveryRepository;
 
@@ -19,7 +20,7 @@ public class ReserveTruckService implements ReserveTruckUseCase {
     }
 
     @Override
-    public Optional<Delivery> reserveTruck(DeliveryCommand delivery) {
+    public Optional<DeliveryResponse> reserveTruck(DeliveryCommand delivery) {
         try {
             throwErrorIfBadLuck(truckAvailability);
         }
@@ -29,19 +30,20 @@ public class ReserveTruckService implements ReserveTruckUseCase {
 
         Delivery newDelivery = new Delivery(delivery.orderId(), delivery.address(), delivery.customerName(), delivery.customerEmail());
         Delivery savedDelivery = deliveryRepository.save(newDelivery);
-        return Optional.of(savedDelivery);
+        return Optional.of(new DeliveryResponse(savedDelivery.getDeliveryId(), savedDelivery.getOrderId(), savedDelivery.getAddress(),
+                savedDelivery.getCustomerName(), savedDelivery.getCustomerEmail()));
     }
 
-    private void throwErrorIfBadLuck(int faultPercent) {
-        if (faultPercent == 0) {
+    private void throwErrorIfBadLuck(int availability) {
+        if (availability == 100) {
             return;
         }
         int randomThreshold = getRandomNumber(1, 100);
-        if (faultPercent < randomThreshold) {
-            System.out.println("We got lucky, no error occurred, %d < %d".formatted(faultPercent, randomThreshold));
+        if (availability > randomThreshold) {
+            System.out.println("We got lucky, no error occurred, %d < %d".formatted(availability, randomThreshold));
 
         } else {
-            System.out.println("Bad luck, an error occurred, %d >= %d".formatted(faultPercent, randomThreshold));
+            System.out.println("Bad luck, an error occurred, %d >= %d".formatted(availability, randomThreshold));
             throw new RuntimeException("Something went wrong...");
         }
     }

@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "delivery")
 public class DeliveryEntity {
     @Id
@@ -16,6 +18,10 @@ public class DeliveryEntity {
     private String address;
     private String customerName;
     private String customerEmail;
+    private LocalDateTime creationDate;
+
+    public DeliveryEntity() {
+    }
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -73,5 +79,13 @@ public class DeliveryEntity {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }

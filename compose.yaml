@@ -37,7 +37,7 @@ services:
       mysql:
         condition: service_healthy
 
-  orderHistort-service:
+  orderHistory-service:
     build: orderHistory
     mem_limit: 350m
     environment:

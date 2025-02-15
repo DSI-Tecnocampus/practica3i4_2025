@@ -2,6 +2,8 @@ package cat.tecnocampus.delivery.adapters.out;
 
 import cat.tecnocampus.delivery.application.services.Delivery;
 
+import java.time.LocalDateTime;
+
 public class DeliveryMapper {
 
     public static DeliveryEntity toEntity(Delivery delivery) {
@@ -10,12 +12,12 @@ public class DeliveryMapper {
         }
 
         DeliveryEntity entity = new DeliveryEntity();
-        entity.setId(delivery.getDeliveryId());
         entity.setOrderId(delivery.getOrderId());
         entity.setAddress(delivery.getAddress());
         entity.setCustomerName(delivery.getCustomerName());
         entity.setCustomerEmail(delivery.getCustomerEmail());
         entity.setStatus(DeliveryEntity.Status.valueOf(delivery.getStatus().name()));
+        entity.setCreationDate(LocalDateTime.now());
         return entity;
     }
 

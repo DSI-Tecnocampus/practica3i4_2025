@@ -1,7 +1,8 @@
 spring.application.name: delivery
 delivery:
   truck:
-    availability: 70
+    availability: 100
+  sendAfter: 30 # seconds
 
 spring:
   sql.init.mode: always
